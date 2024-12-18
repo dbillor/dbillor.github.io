@@ -1,9 +1,16 @@
-body {
+html, body {
   margin: 0;
+  padding: 0;
+  overflow-x: hidden; /* Added to prevent horizontal scroll on mobile */
+  box-sizing: border-box; /* Often helpful for responsive sizing */
+}
+
+body {
   font-family: 'Orbitron', sans-serif;
   background: #000;
   color: #fff;
 }
+
 .navbar-wrapper {
   position: fixed;
   top: 0;
@@ -69,6 +76,8 @@ body {
   align-items: center;
   text-align: center;
   padding: 0 1rem;
+  box-sizing: border-box; /* Added for consistent sizing */
+  overflow-wrap: break-word; /* Added to ensure text wraps */
 }
 
 .hero-name {
@@ -76,11 +85,13 @@ body {
   font-weight: 700;
   margin: 0;
   color: #fff;
+  max-width: 90%; /* Added to prevent overflow on small screens */
 }
 
 .hero-about {
   max-width: 600px;
   margin-top: 1.5rem; /* Space between the name and paragraph */
+  width: 90%; /* Added to ensure it fits within viewport */
 }
 
 .hero-about p {
@@ -90,6 +101,7 @@ body {
   color: #eee;
   margin: 0;
   text-align: center;
+  overflow-wrap: break-word; /* Added to ensure text breaks properly */
 }
 
 .hero-about a {
@@ -100,6 +112,8 @@ body {
 .hero-about a:hover {
   text-decoration: underline;
 }
+
+/* Resume Page Styles */
 body.resume-body {
   background: #000;
   color: #fff;
@@ -178,6 +192,8 @@ body.resume-body .nav-links a {
 body.resume-body .nav-links a:hover {
   color: #00ced1;
 }
+
+/* Blog Page Styles */
 body.blog-body {
   background: #000;
   color: #fff;
@@ -269,6 +285,7 @@ body.blog-body .nav-links a {
 body.blog-body .nav-links a:hover {
   color: #00ced1;
 }
+
 /* Markdown Content Styling */
 .post-entry {
   margin-top: 2rem;
@@ -363,82 +380,27 @@ details summary::-webkit-details-marker {
   display: none;
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+/* Responsive Adjustments */
+@media only screen and (max-width: 600px) {
+  .hero-name {
+    font-size: 2rem; /* Smaller font for small screens */
+    max-width: 90%;
+  }
+
+  .hero-about p {
+    font-size: 1rem;
+    line-height: 1.4;
+  }
+
+  .navbar {
+    padding: 0.5rem 1rem; /* Reduced padding for mobile */
+  }
+
+  .nav-links {
+    gap: 1rem; /* Reduce gap between nav links on small screens */
+  }
+
+  .blog-section, .resume-section {
+    padding: 2rem 1rem; /* Less padding on smaller screens */
+  }
+}
