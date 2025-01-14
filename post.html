@@ -7,8 +7,7 @@
 
   <link rel="stylesheet" href="style.css"/>
 
-  <!-- More subtle or bright theme – 
-       GitHub is more subtle, try “dracula.min.css” for more color -->
+  <!-- A highlight.js theme (e.g. GitHub or Dracula) -->
   <link 
     rel="stylesheet"
     href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css"
@@ -24,35 +23,14 @@
 
   <!-- Marked.js -->
   <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
-  <script>
-      hljs.highlightAll();
-  </script>
-  <script>
-    // Register Python
-    hljs.registerLanguage('python', hljsPython);
-
-    // Marked + highlight
-    marked.setOptions({
-      gfm: true,
-      breaks: true,
-      highlight: function (code, lang) {
-        if (lang && hljs.getLanguage(lang)) {
-          return hljs.highlight(code, { language: lang }).value;
-        }
-        return hljs.highlightAuto(code).value;
-      }
-    });
-  </script>
+  <!-- 
+    Remove: hljs.registerLanguage('python', hljsPython);
+    This is NOT needed if python.min.js registers automatically.
+  -->
 </head>
 <body class="blog-body">
   <header class="navbar-wrapper">
-    <nav class="navbar">
-      <ul class="nav-links">
-        <li><a href="index.html">Home</a></li>
-        <li><a href="resume.html">Resume</a></li>
-        <li><a href="blog.html">Blog</a></li>
-      </ul>
-    </nav>
+    ...
   </header>
 
   <section class="blog-section">
@@ -65,6 +43,18 @@
   </footer>
 
   <script>
+    // Optional: configure Marked to highlight code with highlight.js
+    marked.setOptions({
+      gfm: true,
+      breaks: true,
+      highlight: function(code, lang) {
+        if (lang && hljs.getLanguage(lang)) {
+          return hljs.highlight(code, { language: lang }).value;
+        }
+        return hljs.highlightAuto(code).value;
+      }
+    });
+
     document.addEventListener('DOMContentLoaded', () => {
       const params = new URLSearchParams(window.location.search);
       const filename = params.get('filename');
@@ -76,7 +66,6 @@
         return;
       }
 
-      // Attempt to load the .md file from /posts/ directory
       fetch('posts/' + filename)
         .then(res => {
           if (!res.ok) {
@@ -85,17 +74,20 @@
           return res.text();
         })
         .then(markdown => {
-          // Convert to HTML (with code highlighting)
+          // Convert to HTML
           const html = marked.parse(markdown);
           postContent.innerHTML = html;
 
-          // Optionally set the <h2> from the first line if the .md starts with "# ..."
+          // Optionally set <h2> from first line of .md
           const firstLine = markdown.split('\n')[0].replace(/^#\s*/, '').trim();
           if (firstLine && firstLine.length < 80) {
             postTitle.textContent = firstLine;
           } else {
             postTitle.textContent = "Blog Post";
           }
+
+          // If you want to force highlight again, can do:
+          // hljs.highlightAll();
         })
         .catch(err => {
           postTitle.textContent = "Error loading post";
