@@ -5,11 +5,39 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <meta name="description" content="Blog - Denizcan (Deni) Billor"/>
   <title>Blog - Deni Billor</title>
+
   <link rel="preconnect" href="https://fonts.gstatic.com">
-  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet">
+  <link 
+    href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&display=swap" 
+    rel="stylesheet">
+
   <link rel="stylesheet" href="style.css"/>
-  <!-- Load marked.js BEFORE script.js -->
-  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+
+  <style>
+    /* 
+      White date/title links for each post. 
+      Rollover color is #00ced1.
+    */
+    .blog-list-link {
+      display: block;
+      margin-bottom: 1rem;
+      text-decoration: none;
+      color: #fff;
+      font-size: 1.2rem;
+    }
+    .blog-list-link:hover {
+      color: #00ced1;
+    }
+    .post-date {
+      margin-right: 0.5rem;
+      color: #fff;
+      font-weight: normal;
+    }
+    .post-title {
+      color: #fff;
+      font-weight: 600;
+    }
+  </style>
 </head>
 <body class="blog-body">
   <header class="navbar-wrapper">
@@ -24,16 +52,64 @@
   <section class="blog-section">
     <h2>Blog</h2>
     <p class="blog-intro">
-      Welcome to my blog, where I share insights on AI infrastructure, hyperscale networking, optical engineering, and technology-driven human betterment.
+      Welcome to my blog, where I share insights on AI infrastructure, 
+      hyperscale networking, optical engineering, and technology-driven 
+      human betterment.
     </p>
-    <div id="blog-posts" class="blog-posts"></div>
+    <div id="blog-list"></div>
   </section>
 
   <footer class="footer">
-    <p>&copy; 2024 Denizcan (Deni) Billor</p>
+    <p>&copy; 2025 Denizcan (Deni) Billor</p>
   </footer>
 
-  <!-- Load script.js AFTER marked -->
-  <script src="script.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const listContainer = document.getElementById('blog-list');
+
+      // Fetch posts.json
+      fetch('posts.json')
+        .then(res => {
+          if (!res.ok) {
+            throw new Error(`Failed to load posts.json (status: ${res.status})`);
+          }
+          return res.json();
+        })
+        .then(posts => {
+          // Sort by date descending
+          posts.sort((a, b) => new Date(b.date) - new Date(a.date));
+
+          if (posts.length === 0) {
+            listContainer.textContent = "No posts available.";
+            return;
+          }
+
+          // Create links for each post
+          posts.forEach(post => {
+            const link = document.createElement('a');
+            link.className = 'blog-list-link';
+
+            // Format the date as "Month day, year"
+            const dateObj = new Date(post.date);
+            const displayDate = dateObj.toLocaleDateString('en-US', {
+              year: 'numeric', 
+              month: 'short', 
+              day: 'numeric'
+            });
+
+            link.innerHTML = `
+              <span class="post-date">${displayDate}</span>
+              <span class="post-title">${post.title}</span>
+            `;
+            // Link to post.html with ?filename=<post.filename>
+            link.href = `post.html?filename=${encodeURIComponent(post.filename)}`;
+            listContainer.appendChild(link);
+          });
+        })
+        .catch(err => {
+          listContainer.innerHTML = `<p style="color: #f66;">Error: ${err.message}</p>`;
+        });
+    });
+  </script>
 </body>
 </html>

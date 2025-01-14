@@ -1,8 +1,16 @@
+/* --------------------------------------
+   Global / Base
+-------------------------------------- */
 html, body {
   margin: 0;
   padding: 0;
-  overflow-x: hidden; /* Added to prevent horizontal scroll on mobile */
-  box-sizing: border-box; /* Often helpful for responsive sizing */
+  box-sizing: border-box;
+  /* 
+    If you keep overflow-x: hidden; 
+    wide code blocks can be clipped
+    so let's comment it out:
+  */
+  /* overflow-x: hidden; */
 }
 
 body {
@@ -11,6 +19,16 @@ body {
   color: #fff;
 }
 
+.footer {
+  position: relative;
+  z-index: 1;
+  text-align: center;
+  margin: 2rem 0;
+}
+
+/* --------------------------------------
+   Navbar
+-------------------------------------- */
 .navbar-wrapper {
   position: fixed;
   top: 0;
@@ -46,7 +64,9 @@ body {
   color: #00ced1;
 }
 
-/* Video Hero Section */
+/* --------------------------------------
+   Video Hero Section
+-------------------------------------- */
 .video-hero {
   position: relative;
   width: 100%;
@@ -76,8 +96,8 @@ body {
   align-items: center;
   text-align: center;
   padding: 0 1rem;
-  box-sizing: border-box; /* Added for consistent sizing */
-  overflow-wrap: break-word; /* Added to ensure text wraps */
+  box-sizing: border-box;
+  overflow-wrap: break-word;
 }
 
 .hero-name {
@@ -85,13 +105,13 @@ body {
   font-weight: 700;
   margin: 0;
   color: #fff;
-  max-width: 90%; /* Added to prevent overflow on small screens */
+  max-width: 90%;
 }
 
 .hero-about {
   max-width: 600px;
-  margin-top: 1.5rem; /* Space between the name and paragraph */
-  width: 90%; /* Added to ensure it fits within viewport */
+  margin-top: 1.5rem;
+  width: 90%;
 }
 
 .hero-about p {
@@ -101,7 +121,7 @@ body {
   color: #eee;
   margin: 0;
   text-align: center;
-  overflow-wrap: break-word; /* Added to ensure text breaks properly */
+  overflow-wrap: break-word;
 }
 
 .hero-about a {
@@ -113,13 +133,15 @@ body {
   text-decoration: underline;
 }
 
-/* Resume Page Styles */
+/* --------------------------------------
+   Resume Page Styles
+-------------------------------------- */
 body.resume-body {
   background: #000;
   color: #fff;
   font-family: 'Space Grotesk', sans-serif;
   margin: 0;
-  padding-top: 70px; /* to avoid navbar overlap */
+  padding-top: 70px; /* offset navbar */
 }
 
 .resume-section {
@@ -180,7 +202,7 @@ body.resume-body {
   margin-bottom: 0.5rem;
 }
 
-/* Adjust navbar for dark background on resume page */
+/* Dark navbar for resume page */
 body.resume-body .navbar {
   background: rgba(0,0,0,0.7);
 }
@@ -193,13 +215,15 @@ body.resume-body .nav-links a:hover {
   color: #00ced1;
 }
 
-/* Blog Page Styles */
+/* --------------------------------------
+   Blog Page Styles
+-------------------------------------- */
 body.blog-body {
   background: #000;
   color: #fff;
   font-family: 'Orbitron', sans-serif;
   margin: 0;
-  padding-top: 70px; /* account for fixed navbar */
+  padding-top: 70px; /* offset navbar */
 }
 
 .blog-section {
@@ -221,76 +245,20 @@ body.blog-body {
   margin-bottom: 3rem;
 }
 
-.blog-posts details {
-  background: #111;
-  margin-bottom: 1rem;
-  border-radius: 8px;
-  padding: 1rem;
-  border: 1px solid #333;
-}
+/* 
+   If you had .post-entry for the modal approach, 
+   we've removed the "modal" logic. 
+   Instead, we allow highlight.js to color code blocks.
+*/
 
-.blog-posts summary {
-  cursor: pointer;
-  font-size: 1.3rem;
-  font-weight: 700;
-  color: #00ced1;
-  outline: none;
-  list-style: none;
-}
-
-.blog-posts summary::-webkit-details-marker {
-  display: none; /* Hide default marker */
-}
-
-.blog-posts summary:after {
-  content: " +";
-  color: #00ced1;
-  margin-left: 0.5rem;
-}
-
-.blog-posts details[open] summary:after {
-  content: " -";
-}
-
-.blog-posts .post-entry {
-  margin-top: 1rem;
-  background: #222;
-  padding: 1rem;
-  border-radius: 5px;
-  text-align: left;
-}
-
-.blog-posts .post-entry h3 {
-  margin-top: 0;
-  font-size: 1.4rem;
-  color: #fff;
-}
-
-.blog-posts .post-entry p {
-  color: #ccc;
-  font-size: 1rem;
-  line-height: 1.6;
-  margin-bottom: 0;
-}
-
-/* Navbar adjustments for blog page (if needed) */
-body.blog-body .navbar {
-  background: rgba(0,0,0,0.7);
-}
-
-body.blog-body .nav-links a {
-  color: #fff;
-}
-
-body.blog-body .nav-links a:hover {
-  color: #00ced1;
-}
-
-/* Markdown Content Styling */
+/* --------------------------------------
+   Markdown Content Styling
+-------------------------------------- */
 .post-entry {
   margin-top: 2rem;
-  color: #ddd;
   font-family: 'Space Grotesk', sans-serif;
+  text-align: left; 
+  /* No forced color: we let highlight tokens show color */
 }
 
 .post-entry h3 {
@@ -301,89 +269,71 @@ body.blog-body .nav-links a:hover {
   padding-bottom: 0.5rem;
 }
 
-/* Style various markdown elements */
-.post-entry h1, .post-entry h2, .post-entry h3, .post-entry h4, .post-entry h5, .post-entry h6 {
+/* Headings in Markdown */
+.post-entry h1, .post-entry h2, .post-entry h3,
+.post-entry h4, .post-entry h5, .post-entry h6 {
   color: #fff;
 }
+
 .post-entry p {
   color: #ccc;
   line-height: 1.6;
 }
+
 .post-entry a {
   color: #0cf;
   text-decoration: underline;
 }
+
 .post-entry a:hover {
   color: #0ff;
 }
+
 .post-entry ul, .post-entry ol {
   margin: 1rem 0;
   padding-left: 1.5rem;
 }
+
 .post-entry li {
   margin-bottom: 0.5rem;
 }
-.post-entry code, .post-entry pre {
-  background: #222;
-  color: #0f0;
-  padding: 0.2rem 0.4rem;
-  border-radius: 4px;
-}
+
 .post-entry blockquote {
   border-left: 4px solid #555;
   padding-left: 1rem;
   color: #aaa;
 }
 
-/* Fullscreen Expanded Mode for Details */
-details.expanded {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  background: #111;
-  color: #fff;
-  padding: 2rem;
-  margin: 0;
-  z-index: 9999;
-  overflow: auto;
-}
-details.expanded summary {
-  cursor: pointer;
-  font-size: 1.5rem;
-  color: #00ced1;
-  font-weight: 700;
-  border-bottom: 2px solid #444;
+/* 
+   Code blocks: let highlight.js do the coloring 
+   by NOT forcing a single color on them.
+*/
+.post-entry pre {
+  background: #222;
+  font-family: 'Courier New', Courier, monospace;
+  tab-size: 2;
+  white-space: pre;
+  overflow-x: auto;
+  padding: 0.8rem 1rem;
+  border-radius: 4px;
   margin-bottom: 1rem;
 }
-details.expanded summary::-webkit-details-marker {
-  display: none;
+
+/* Inline code */
+.post-entry code {
+  background: #222;
+  font-family: 'Courier New', Courier, monospace;
+  white-space: pre-wrap;
+  padding: 0.2rem 0.4rem;
+  border-radius: 4px;
 }
 
-details.expanded summary:after {
-  content: " (click to close)";
-  font-size: 1rem;
-  color: #777;
-  margin-left: 0.5rem;
-}
-
-/* Styling for normal (collapsed) state of details */
-details summary {
-  cursor: pointer;
-  font-size: 1.2rem;
-  font-weight: 700;
-  color: #00ced1;
-  margin-bottom: 1rem;
-}
-details summary::-webkit-details-marker {
-  display: none;
-}
-
-/* Responsive Adjustments */
+/* --------------------------------------
+   Responsive Adjustments
+-------------------------------------- */
 @media only screen and (max-width: 600px) {
   .hero-name {
-    font-size: 2rem; /* Smaller font for small screens */
+    font-size: 2rem;
     max-width: 90%;
   }
 
@@ -393,14 +343,15 @@ details summary::-webkit-details-marker {
   }
 
   .navbar {
-    padding: 0.5rem 1rem; /* Reduced padding for mobile */
+    padding: 0.5rem 1rem;
   }
 
   .nav-links {
-    gap: 1rem; /* Reduce gap between nav links on small screens */
+    gap: 1rem;
   }
 
-  .blog-section, .resume-section {
-    padding: 2rem 1rem; /* Less padding on smaller screens */
+  .blog-section,
+  .resume-section {
+    padding: 2rem 1rem;
   }
 }
